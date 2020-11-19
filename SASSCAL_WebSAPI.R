@@ -9,11 +9,6 @@ library(shinydashboard)
 library(DBI)# For databases
 library(data.table)
 
-####################### READ THIS  #################################################################
-#   http://bradleyboehmke.github.io/2015/12/scraping-html-tables.html
-#   https://www.r-bloggers.com/2015/05/old-is-new-xml-and-rvest/
-#   https://andreaiacono.blogspot.com/2014/01/scraping-data-from-web-pages-in-r-with.html
-####################################################################################################
 if (interactive()) {
   #===================== Scrape the Data from the SASSCAL Weathernet================================
   #Using the XML package to parse the HTML tables
