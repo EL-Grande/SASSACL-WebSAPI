@@ -18,9 +18,6 @@ if (interactive()) {
   Connection<-"&date_crit_daily="
   Date<-"2017-06-06"
   URL3<- paste(Link,Station,Connection,Date,sep="")
-
-
-
   sasscal_data_xml1<-readHTMLTable(url1)
   Nov_1_2020<-as.data.frame(head(sasscal_data_xml1[13]))
 
@@ -83,12 +80,6 @@ if (interactive()) {
                  menuSubItem("South Africa", tabName = "SA"),
                  menuSubItem("Zimbabwe", tabName = "Zim")
         )
-
-        #   menuItem("Data Analytics", tabName = "analis", icon = icon("dashboard")),
-
-        #   menuItem("Modelling", icon = icon("th"), tabName = "modelling", badgeLabel = "new",
-        #            badgeColor = "green")
-
       )#,
 
       #The date ranger function
@@ -119,19 +110,17 @@ if (interactive()) {
           MyRange, height = 116
         ),
 
-        #Box 5
+        #Box 4
         box(
           title = "Select Application of Data", status = "primary", solidHeader = TRUE, collapsible = TRUE,
           Aplicacion, height = 116
         ),
 
-
-        #Box 4
+        #Box 5
         box(
           title = "Data Output", status = "primary", solidHeader = TRUE, collapsible = TRUE,
           column(width = 4,Data_Output), height = 116
         ),
-
 
         #Box 6
         box(
@@ -139,24 +128,16 @@ if (interactive()) {
           action_demo1 <-actionButton("submit", "Download this data"),
           action_demo2 <- actionButton("clear", "Clear Form"), height = 116
         )
-
-
-        #Box 5
-
       ),
 
       fluidRow(
-        #Box 4
+        #Box 7
         box(
           column(width = 12,Variable_Selector),
           #  valueBox("ALL", "Selected Variables"),
           tableOutput("data"), width = 12
         )
-
-
       )
-
-
     )#End Dashboardy = body
 
   )#End GUID =u i
