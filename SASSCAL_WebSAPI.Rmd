@@ -1,0 +1,320 @@
+---
+title: "Tutorial"
+output: 
+  html_document:
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    source_code: embed
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+setwd("C:/Users/Tsaone Thapelo/Desktop/CreamaTech/TutorialPaper")
+library(flexdashboard)
+library(tidyverse)
+library(DT)
+library(leaflet)
+library(rvest)
+library(XML)#for   readHTMLTable
+library(stringr)
+# if (!require("DT")) install.packages('DT')
+#xfun::session_info('DT')
+```
+
+# Introduction
+Its iirefutable that there is a huge need in
+climatological data for Southern Africa. Meteorological weather data are useful in filling information needs  in  academia  and  industrial  settings.  The  information generated   from   these   data   at   local   levels   is   useful   in complementing:    hydrological    models,    high    impact weather  predictions  models,  and  simulations  of  heavy rainfall events  and heatwaves. Moreover, weather data are also vital for agro-meteorological operations, as well as  in  efficacious  planning  of  construction  and  recreationalactivities.  Although  there  is  a  huge  need  of  weather  or climatological  data  for  Southern  Africa,  various  institutions and enterprises like BIUST, SASSCAL and WASCAL have introduced AWSs to monitor weather events at finer intervals. 
+
+
+The  project   required considerable up-front work to develop the proposed online platform to facilitate manipulation and eploration of the generated data.
+
+
+## Tools and Methods
+
+This work deploys the R Statistical envirionemnt to allow interaction with Shinyand RMarkdown. Web scraping  through such apps offers incredible potential to reduce the workload of a dat collection, data analysis as well as predictive modelling. It couples it with an extremely flexible dashbaord (Flexdashboard) using the  R-Markdown technology coupled with the Shiny package for interactive shiny widgets.
+
+## Objective
+In this tutorial, I am going to build an app based on a   online data source.
+
+
+# The SASSCAL Weather data
+
+The SASSCAL Weather  data are climatological  information   collected from different automatic weather stations maintained by the SASSCAL organisation and other private sector enterprices. These data is then used by meteorologists, climatologists, and other researchers geared towards environmental data Science to efficiently accomplish their mandated objectives.  
+
+
+## Applications of the SASSCAL Weather data
+
+The SASSCAL Weather  data is crucial in weather analytics and forecasting. These data is oftenely used to complement   the climatological models that are executed at regional levels by weather forecasters. These data enable decision makers to fill information needs about the agricultural activities,  improve data quality and timeliness in planning construction and recreational activities for instance. These data are solely applicable in any statistical purposes including in academic illustrations.
+
+
+ 
+## Benefits of  the SASSCAL WebSAPI
+
+Using the SASSCAL WebSAPI saves time and money.  It reduces the amount of time you spend responding to requesting and preparing data, while ensuring that the collected data  remains accurate, relevant and efficient. Over time, an increased use of SASSCAL Weather data would mean that you would not have to request for data but rather selects data per his/her desire and even supply weather data. This is especially useful in catalysing the concept of citizean science.
+
+### Maps
+
+We can use interactive map  to visualise   distribution of AWSs in Botswana. The interactive map can pop-up the name of the AWS as the user hovers the mouse over a marker.
+
+
+```{r}
+source("Cordinates_bw.r") # Invoke the cordinates for Botswana
+source("Cordinates_nw.r")# Invoke the cordinates for Namibia
+source("All_Mappers.R") # Invoke the Mappers for BW and NW
+source("All_Cordinates_Script.r")
+source("All_Mappers_Script.R") # Invoke the Mappers for BW and NW
+```
+
+Algorithm $All\_Mappers.R$ implements an interactive map to visualise the distribution of
+the AWSs supported. Here, w is a vector of
+AWSs for a given country, x and y are vectors of the latitude
+and longitude coordinates of the AWSs, z is a vector detailing
+the descriptions of a given AWS. The algorithm also allows
+users to select specific AWSs; thanks to the leaflet package.
+AWS Distribution: Botswana
+
+```{r}
+sasscal_mapper # BW Mapper
+```
+
+## Downloading the SASSCAL Weather Data
+
+This code inmplements web scraping using the XML and rvest packages.
+
+```{r}
+# Uses the URL_Getter Function to extract data embbdded in a webpage
+source("DataHarvester.R") # Invoke the data harvester algorithm
+MisDatos<-TheHarvester("Mahalapye","2016-04-03")
+```
+
+
+##  SASSCAL Weather Data Visualisation: Tables
+
+The R package DT provides an R interface to the JavaScript library DataTables. R data objects (matrices or data frames) can be displayed as tables on HTML pages, and DataTables provides filtering, pagination, sorting, and many other features in the tables.
+
+
+The main function in this package is datatable(). It creates an HTML widget to display R data objects with DataTables.
+Since the generated data set  is too wide (with 17 variables), we fix the first and last columns  using the FixedColumns extension. This allows them to be visible when we scroll the table horizontally.
+
+```{r}
+# fix some left 1 columns and right 1 column
+datatable(
+  MisDatos, extensions = list('FixedColumns'),  
+  options = list(
+    dom = 't',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 1, rightColumns = 1)
+  )
+)
+
+```
+
+***More Table***
+
+
+
+```{r}
+datatable(head(MisDatos[,1:6]),
+          caption = htmltools::tags$caption(
+    style = 'caption-side: top; text-align: center;',
+    'Table 1: ', htmltools::em('Displaying the first six variables.')
+  ),
+  #class = 'cell-border stripe'
+  class = 'table-bordered'
+  ,
+  style = 'bootstrap'
+  )
+#datatable(iris, style = 'bootstrap', class = 'table-bordered')
+#datatable(iris, class = 'cell-border stripe')
+```
+
+Here is another example to replace the header of the variables.
+
+```{r}
+datatable(head(MisDatos), colnames = c('Time', 'AT', 'ST', 'P', 'WS', 'WD'))
+
+# cprovide a shorter numeric or character vector as the index vector to replace a subset of the column names
+#datatable(head(iris), colnames = c('A Better Name' = 'Sepal.Width'))
+```
+
+***Initialization Options***
+We can pass initialization options to datatable() via the options argument. For example, we center the 5th column in the table below1, and customize the length menu:
+
+```{r}
+datatable(head(MisDatos[,1:6]), 
+          options = list(
+  columnDefs = list(list(className = 'dt-center', targets = 5)),
+  pageLength = 5,
+  lengthMenu = c(5, 10, 15, 20)
+))
+```
+
+
+***DOM Elements***
+
+By default, the table has these DOM elements: the length menu, the search box, the table, the information summary, and the pagination control. You can choose to display a subset of these elements using the dom option. Here are some examples:
+
+ 
+    l - length changing input control
+    f - filtering input
+    t - The table!
+    i - Table information summary
+    p - pagination control
+    r - processing display element
+
+
+```{r}
+# the filtering box and the table
+datatable(head(MisDatos[,1:6]), options = list(dom = 'ft'))
+```
+
+***Add Buttons to the Table***
+
+A common UI paradigm to use with interactive tables is to present buttons that will trigger some action - that may be to alter the table's state, modify the data in the table, gather the data from the table or even to activate some external process. Showing such buttons is an interface that end users are comfortable with, making them feel at home with the table.
+
+```{r}
+# Add   buttons 
+datatable(head(MisDatos[,1:6]), 
+          extensions = 'Buttons', 
+          options = list(dom = 'Bfrtip',
+                         buttons = 
+      list('copy', 'print', list(
+        extend = 'collection',
+        buttons = c('csv', 'excel', 'pdf'),
+        text = 'Download'
+      ))))
+
+
+```
+
+***Callbacks in Options***
+
+We can also customize the callbacks in DataTables options. For example, we use the initComplete callback function in options to change the background color of the table header to black after the initialization:
+
+```{r}
+# Add   buttons 
+datatable(head(MisDatos[,1:6]), 
+          extensions = 'Buttons', 
+          options = list(dom = 'Bfrtip',
+                         buttons = 
+      list('copy', 'print', list(
+        extend = 'collection',
+        buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+       # buttons = c('csv', 'excel', 'pdf'),
+       # text = 'Download'
+      )),
+      initComplete = JS(
+    "function(settings, json) {",
+    "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
+    "}")))
+```
+
+***ColReorder***
+ 
+You can click and drag the table header to move a certain column to a different place using the ColReorder extension.
+
+```{r}
+datatable(head(MisDatos[,1:6]), extensions = 'ColReorder', options = list(colReorder = TRUE))
+```
+
+
+
+***KeyTable***
+
+The KeyTable extension provides the ability of navigating through the table like Excel: a cell is highlighted by a box, and you can move around using the arrow keys (Left/Right/Up/Down).
+
+```{r}
+datatable(MisDatos[,1:6], extensions = 'KeyTable', options = list(keys = TRUE))
+```
+
+***Responsive***
+
+The Responsive extension makes the table columns responsive in the sense that when the page is too narrow, certain columns can be automatically collapsed and hidden. In the example below, as you decrease the page width, you will see a sequence of columns collapsed and a button appear on the left. You can click the button to expand the data of the hidden columns behind it.
+
+```{r}
+datatable(MisDatos[,1:6], extensions = 'Responsive')
+```
+
+***Scroller***
+
+When the table has a large number of rows, you may not want to render all rows on the page immediately since it will be slow. The Scroller extension makes it possible to only render the visible portion of the table.
+
+```{r}
+datatable(MisDatos[,1:6], extensions = 'Scroller', options = list(
+  deferRender = TRUE,
+  scrollY = 200,
+  scroller = TRUE
+))
+```
+
+***Select***
+
+The Select extension allows the user to perform item selections in DataTable. It supports three different selection styles including os(Operating system), single(Single item select) and multiple(Multi-item selection) and has built-in button types for the Buttons extension allowing select all / none and other actions to be performed very easily. However, it only works well in the client-side processing mode, i.e., DT::renderDT(..., server = FALSE). Note that you need to turn off DT's own select functionality by setting selection = 'none' when you want to use the Select extension in shiny.
+
+DT also has its own implementation of row/column/cell selections in Shiny (see the selection param in ?DT::datatable), which is different from the Select extension. In particular, it only supports Shift/Ctrl + Click for selecting multiple rows at the time of writing (see #305 for an example). On the other hand, DT's implementation supports both client and server-side processing mode.
+
+```{r}
+datatable(
+  MisDatos[,1:6], extensions = c('Select', 'Buttons'), options = list(
+    select = list(style = 'os', items = 'row'),
+    dom = 'Blfrtip',
+    rowId = 0,
+    buttons = c('selectAll', 'selectNone', 'selectRows', 'selectColumns', 'selectCells')
+  ),
+  selection = 'none'
+)
+```
+
+***More on Buttons and Downloads***
+The Buttons extension adds some buttons to the table to copy the table to clipboard, save the table as CSV/XLS/PDF, and print the table, etc. Here are some built-in buttons provided by this extension (note B in dom denotes the place where the buttons are to be inserted):
+
+```{r}
+datatable(
+  MisDatos[,1:6], extensions = 'Buttons', options = list(
+    dom = 'Bfrtip',
+    buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+  )
+)
+
+
+```
+
+***Download Data***
+
+For this, I will use the  uiOutput with renderUI. Note that Without using uiOutput the downloadButton function gets ignored (only the downloadHandler gets evaluated).
+
+
+```{r}
+# Create placeholder for the downloadButton
+uiOutput("downloadUI")
+```
+
+```{r}
+
+## Metric 1
+#selectInput('metric',
+#            'Choose Metric',
+#            names(dataset %>% select(-default_column)),
+#            selected = "default_metric")
+#
+# Create the actual downloadButton
+output$downloadUI <- renderUI( {
+  downloadButton("downBtn", "Download This data", style = "width:100%;")
+})
+
+# Add download handling
+output$downBtn <- downloadHandler(
+  filename = function() {
+    "WeatherData.csv"
+  },
+  content = function(file) {
+    write.csv(MisDatos[,1:6], file, row.names = FALSE)
+    # write.csv(subset_dataset(), file, row.names = FALSE)
+  }
+)
+```
+
+
+
+ 
