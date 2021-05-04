@@ -8,9 +8,9 @@ output:
     source_code: embed
 runtime: shiny
 ---
-
+ 
 ```{r setup, include=FALSE}
-setwd("C:/Users/Tsaone Thapelo/Desktop/CreamaTech/TutorialPaper")
+setwd("path/to/the/working/directory")
 library(flexdashboard)
 library(tidyverse)
 library(DT)
@@ -33,6 +33,20 @@ The  project   required considerable up-front work to develop the proposed onlin
 ## Tools and Methods
 
 This work deploys the R Statistical envirionemnt to allow interaction with Shinyand RMarkdown. Web scraping  through such apps offers incredible potential to reduce the workload of a dat collection, data analysis as well as predictive modelling. It couples it with an extremely flexible dashbaord (Flexdashboard) using the  R-Markdown technology coupled with the Shiny package for interactive shiny widgets.
+
+The packages to be intalled and loaded
+
+```
+pkgs<-c("flexdashboard","tidyverse", "DT","leaflet","rvest","XML","stringr")
+install.packages(pkgs)
+library(flexdashboard)
+library(tidyverse)
+library(DT)
+library(leaflet)
+library(rvest)
+library(XML)#for   readHTMLTable
+library(stringr)
+```
 
 ## Objective
 In this tutorial, I am going to build an app based on a   online data source.
