@@ -27,7 +27,7 @@ Its iirefutable that there is a huge need in
 climatological data for Southern Africa. Meteorological weather data are useful in filling information needs  in  academia  and  industrial  settings.  The  information generated   from   these   data   at   local   levels   is   useful   in complementing:    hydrological    models,    high    impact weather  predictions  models,  and  simulations  of  heavy rainfall events  and heatwaves. Moreover, weather data are also vital for agro-meteorological operations, as well as  in  efficacious  planning  of  construction  and  recreationalactivities.  Although  there  is  a  huge  need  of  weather  or climatological  data  for  Southern  Africa,  various  institutions and enterprises like BIUST, SASSCAL and WASCAL have introduced AWSs to monitor weather events at finer intervals. 
 
 
-The  project   required considerable up-front work to develop the proposed online platform to facilitate manipulation and eploration of the generated data.
+Such  projects   require  considerable up-front work to develop the proposed online platform to facilitate manipulation and eploration of the generated data.
 
 
 ## Tools and Methods
@@ -49,7 +49,7 @@ library(stringr)
 ```
 
 ## Objective
-In this tutorial, I am going to build an app based on a   online data source.
+In this tutorial, I am going to build an app based on an   online data source.
 
 
 # The SASSCAL Weather data
