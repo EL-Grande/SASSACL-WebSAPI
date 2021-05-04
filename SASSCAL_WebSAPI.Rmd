@@ -26,9 +26,7 @@ library(stringr)
 Its iirefutable that there is a huge need in
 climatological data for Southern Africa. Meteorological weather data are useful in filling information needs  in  academia  and  industrial  settings.  The  information generated   from   these   data   at   local   levels   is   useful   in complementing:    hydrological    models,    high    impact weather  predictions  models,  and  simulations  of  heavy rainfall events  and heatwaves. Moreover, weather data are also vital for agro-meteorological operations, as well as  in  efficacious  planning  of  construction  and  recreationalactivities.  Although  there  is  a  huge  need  of  weather  or climatological  data  for  Southern  Africa,  various  institutions and enterprises like BIUST, SASSCAL and WASCAL have introduced AWSs to monitor weather events at finer intervals. 
 
-
 Such  projects   require  considerable up-front work to develop the proposed online platform to facilitate manipulation and eploration of the generated data.
-
 
 ## Tools and Methods
 
@@ -51,17 +49,13 @@ library(stringr)
 ## Objective
 In this tutorial, I am going to build an app based on an   online data source.
 
-
 # The SASSCAL Weather data
 
 The SASSCAL Weather  data are climatological  information   collected from different automatic weather stations maintained by the SASSCAL organisation and other private sector enterprices. These data is then used by meteorologists, climatologists, and other researchers geared towards environmental data Science to efficiently accomplish their mandated objectives.  
 
-
 ## Applications of the SASSCAL Weather data
 
 The SASSCAL Weather  data is crucial in weather analytics and forecasting. These data is oftenely used to complement   the climatological models that are executed at regional levels by weather forecasters. These data enable decision makers to fill information needs about the agricultural activities,  improve data quality and timeliness in planning construction and recreational activities for instance. These data are solely applicable in any statistical purposes including in academic illustrations.
-
-
  
 ## Benefits of  the SASSCAL WebSAPI
 
@@ -70,7 +64,6 @@ Using the SASSCAL WebSAPI saves time and money.  It reduces the amount of time y
 ### Maps
 
 We can use interactive map  to visualise   distribution of AWSs in Botswana. The interactive map can pop-up the name of the AWS as the user hovers the mouse over a marker.
-
 
 ```{r}
 source("Cordinates_bw.r") # Invoke the cordinates for Botswana
@@ -102,11 +95,9 @@ source("DataHarvester.R") # Invoke the data harvester algorithm
 MisDatos<-TheHarvester("Mahalapye","2016-04-03")
 ```
 
-
 ##  SASSCAL Weather Data Visualisation: Tables
 
 The R package DT provides an R interface to the JavaScript library DataTables. R data objects (matrices or data frames) can be displayed as tables on HTML pages, and DataTables provides filtering, pagination, sorting, and many other features in the tables.
-
 
 The main function in this package is datatable(). It creates an HTML widget to display R data objects with DataTables.
 Since the generated data set  is too wide (with 17 variables), we fix the first and last columns  using the FixedColumns extension. This allows them to be visible when we scroll the table horizontally.
@@ -121,12 +112,9 @@ datatable(
     fixedColumns = list(leftColumns = 1, rightColumns = 1)
   )
 )
-
 ```
 
 ***More Table***
-
-
 
 ```{r}
 datatable(head(MisDatos[,1:6]),
@@ -163,8 +151,6 @@ datatable(head(MisDatos[,1:6]),
   lengthMenu = c(5, 10, 15, 20)
 ))
 ```
-
-
 ***DOM Elements***
 
 By default, the table has these DOM elements: the length menu, the search box, the table, the information summary, and the pagination control. You can choose to display a subset of these elements using the dom option. Here are some examples:
@@ -175,9 +161,9 @@ By default, the table has these DOM elements: the length menu, the search box, t
     t - The table!
     i - Table information summary
     p - pagination control
-    r - processing display element
-
-
+    r - processing display elemen
+    
+    
 ```{r}
 # the filtering box and the table
 datatable(head(MisDatos[,1:6]), options = list(dom = 'ft'))
@@ -231,8 +217,6 @@ You can click and drag the table header to move a certain column to a different 
 ```{r}
 datatable(head(MisDatos[,1:6]), extensions = 'ColReorder', options = list(colReorder = TRUE))
 ```
-
-
 
 ***KeyTable***
 
@@ -290,14 +274,11 @@ datatable(
     buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
   )
 )
-
-
 ```
 
 ***Download Data***
 
 For this, I will use the  uiOutput with renderUI. Note that Without using uiOutput the downloadButton function gets ignored (only the downloadHandler gets evaluated).
-
 
 ```{r}
 # Create placeholder for the downloadButton
@@ -305,7 +286,6 @@ uiOutput("downloadUI")
 ```
 
 ```{r}
-
 ## Metric 1
 #selectInput('metric',
 #            'Choose Metric',
