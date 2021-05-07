@@ -4,4 +4,4 @@ The SASSCAL WebSAPI   deploys  web scraping and data wrangling techniques to enh
   
  The SASSACL-WebSAPI.R script implements the modularised algorithms  to fascilitate data operations like web scraping, data wrangling and data visualisation using tables and maps. These indiviual algorithmsare then consolidated into a shiny dashoard via the SASSCAL_WebSAPI.R script. 
  
- Note that the App and the scripts will under go several changes depending on the changes to the original concept taking into considerations aspects like user requirements, legality and ethics.
+ Note that the App and the scripts will undergo several changes depending on the changes to the original concept taking into considerations aspects like user requirements, legality and ethics.
